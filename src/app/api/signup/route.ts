@@ -7,15 +7,10 @@ export async function POST(request: Request) {
     await connectDB()
     try {
         const { username, email, password } = await request.json()
-        const userExists = await UserModel.findOne(
-            {
-                username,
-                isVerified: true
-            })
+        const userExists = await UserModel.findOne({ username, isVerified: true }) //should be verified also
         if (userExists) {
             return Response.json({
-                success: false,
-                message: "User already exists"
+                success: false, message: "User already exists"
             },
                 {
                     status: 400
@@ -24,8 +19,19 @@ export async function POST(request: Request) {
         const existingUserByEmail = await UserModel.findOne({ email })
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
         if (existingUserByEmail) {
-            if (existingUserByEmail) {
-
+            if (existingUserByEmail.isVerified) {
+                return Response.json({
+                    success: false, message: "User is already registered with this email"
+                }, {
+                    status: 400
+                })
+            }
+            else {
+                const hashedPassword = await bcrypt.hash(password, 10)
+                existingUserByEmail.password = hashedPassword
+                existingUserByEmail.verifyCode = verifyCode
+                existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000)
+                await existingUserByEmail.save()
             }
         }
         else {
@@ -50,7 +56,21 @@ export async function POST(request: Request) {
             email,
             verifyCode
         })
+        if (!emailResponse.success) {
+            return Response.json({
+                success: false, message: emailResponse.message
+            }, {
+                status: 500
+            })
+        }
 
+        return Response.json({
+            success: true, message: "User registered successfully. Please verify your email",
+        }, {
+            status: 500
+        }
+
+        )
     } catch (error) {
         console.error("Error occured while registering the user");
         return Response.json(
