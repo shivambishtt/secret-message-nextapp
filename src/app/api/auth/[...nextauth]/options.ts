@@ -6,16 +6,16 @@ import UserModel from "@/models/user.models";
 
 
 export const authOptions: NextAuthOptions = {
-    providers: [
+    providers: [ // basic provider
         CredentialsProvider({
-            id: "credentials",
+            id: "credentials", //credentials to given
             name: "credentials",
             credentials: {
                 email: { label: "Email", type: "text" },
                 passsword: { label: "Password", type: "password" }
             },
             async authorize(credentials: any): Promise<any> {
-                await dbConnect()
+                await connectDB() //connecting db
                 try {
                     const user = await UserModel.findOne({
                         $or: [
@@ -42,6 +42,33 @@ export const authOptions: NextAuthOptions = {
                 }
             }
         })
-    ]
+    ],
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token._id = user._id?.toString()
+                token.username = user.username
+                token.isVerified = user.isVerified
+                token.isAcceptingMessages = user.isAcceptingMessages
+            }
+            return token
+        },
+        async session({ session, token }) {
+            if (token) {
+                session.user._id = token._id
+                session.user.username = token.username
+                session.user.isVerified = token.isVerified
+                session.user.isAcceptingMessages = token.isAcceptingMessages
+            }
+            return session
+        }
 
+    },
+    pages: {
+        signIn: '/signin'
+    },
+    session: {
+        strategy: "jwt"
+    },
+    secret: process.env.NEXT_AUTH_SECRET,
 }
