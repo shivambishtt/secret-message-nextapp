@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-export { default } from "next-auth/middleware"
 import { getToken } from "next-auth/jwt";
+export { default } from "next-auth/middleware"
 
 
 export async function middleware(request: NextRequest) {
@@ -18,8 +18,6 @@ export async function middleware(request: NextRequest) {
 
     }
 }
-
-
 
 export const config = {
     matcher: [
