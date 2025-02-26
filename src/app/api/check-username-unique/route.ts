@@ -16,6 +16,7 @@ export async function GET(request: Request) {
             username: searchParams.get('username')
         }
         const result = usernameQuerySchema.safeParse(queryParam)
+
         if (!result.success) {
             const usernameError = result.error.format().username?._errors || []
             return Response.json(
@@ -30,7 +31,7 @@ export async function GET(request: Request) {
         }
         const { username } = result.data
 
-        const existingUser = UserModel.findOne({ username, isVerified: true })
+        const existingUser = await UserModel.findOne({ username, isVerified: true })
         if (existingUser) {
             return Response.json(
                 {

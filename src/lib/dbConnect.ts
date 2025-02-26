@@ -13,7 +13,7 @@ const connectDB = async (): Promise<void> => {
         return
     }
     try {
-        const connectionInstance = await mongoose.connect(process.env.MONGODB_URI || "")
+        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}` || "")
         connection.isConnected = connectionInstance.connection.readyState
 
         console.log("MONGO DB connected successfully");
