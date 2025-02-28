@@ -42,10 +42,9 @@ function Page() {
         } catch (error) {
             console.error("Error in signup of user", error);
             const axiosError = error as AxiosError<ApiResponse>
-            let errorMessage = axiosError.response?.data.message
+            const errorMessage = axiosError.response?.data.message
             toast(errorMessage)
             setFormSubmitting(false)
-
         }
     }
 
@@ -57,8 +56,8 @@ function Page() {
             }
             try {
                 const response = await axios.get(`/api/check-username-unique?username=${username}`)
-                console.log(response, "response");
-                setUsernameMessage(response.data.message)
+                const message = response.data?.message
+                setUsernameMessage(message)
             } catch (error) {
                 const axiosError = error as AxiosError<ApiResponse>
                 setUsernameMessage(axiosError.response?.data.message || "Error checking username")
@@ -97,6 +96,9 @@ function Page() {
                                             }}
                                         />
                                     </FormControl>
+                                    <p className={`text-sm ${usernameMessage === "Username is available" ? 'text-green-500' : 'text-red-500'}`}>
+                                        test{usernameMessage}
+                                    </p>
                                     <FormMessage />
                                 </FormItem>
                             )}
