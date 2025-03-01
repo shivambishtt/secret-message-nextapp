@@ -32,11 +32,11 @@ function Page() {
     })
     const debounce = useDebounceCallback(setUsername, 500)
 
-    const onsubmit = async (data) => {
+    const onsubmit = async (data: unknown) => {
         setFormSubmitting(true)
         try {
             const response = await axios.post<ApiResponse>(`/api/signup`, data)
-            toast("Success")
+            toast(response.data.message)
             router.replace(`/verify/${username}`)
             setFormSubmitting(false)
         } catch (error) {
