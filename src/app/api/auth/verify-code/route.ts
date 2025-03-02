@@ -1,7 +1,6 @@
 import connectDB from "@/lib/dbConnect";
 import UserModel from "@/models/user.models";
 import { z } from "zod"
-import { usernameValidation } from "@/schemas/signupSchema";
 
 export async function POST(request: Request) {
     await connectDB()
@@ -36,7 +35,7 @@ export async function POST(request: Request) {
                 }
             )
         }
-        else if (!isCodeExpired) { // code is expir
+        else if (!isCodeExpired) {
             return Response.json(
                 {
                     success: false,
@@ -54,7 +53,7 @@ export async function POST(request: Request) {
                     message: "Incorrect verification code"
                 },
                 {
-                    status: 400
+                    status: 402
                 }
             )
         }
