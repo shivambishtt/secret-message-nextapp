@@ -39,23 +39,6 @@ function Page() {
       router.replace("/dashboard")
     }
   }
-
-  // const onsubmit = async (data: unknown) => {
-  //   setFormSubmitting(true)
-  //   try {
-  //     const response = await axios.post<ApiResponse>(`/api/signin`, data)
-  //     toast(response.data.message)
-  //     // router.replace(`/verify/${username}`)
-  //     setFormSubmitting(false)
-  //   } catch (error) {
-  //     console.error("Error while signing the user", error);
-  //     const axiosError = error as AxiosError<ApiResponse>
-  //     const errorMessage = axiosError.response?.data.message
-  //     toast(errorMessage)
-  //     setFormSubmitting(false)
-  //   }
-  // }
-
   return (
     <div className='flex justify-center items-center min-h-screen bg-gray-300'>
       <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
@@ -63,7 +46,7 @@ function Page() {
           <h1 className='text-4xl font-extrabold tracking-tight lg:text-5xl mb-6'>
             Join Mystery Message
           </h1>
-          <p className="mb-4">Sign In</p>
+          <p className="mb-4">Sign In to start your anonymous journey</p>
         </div>
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onsubmit)}>
