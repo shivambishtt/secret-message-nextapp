@@ -7,20 +7,20 @@ import { Button } from './ui/button'
 
 function Navbar() {
     const { data: session } = useSession()
-    const user: User = session?.user
+    const user: User = session?.user as User
     return (
         <nav className='p-4 md:p-6 shadow-md'>
             <div className='container mx-auto flex flex-col md:flex-row justify-between items-center'>
-                <a href="#">Mystery Message</a>
+                <a className='text-xl font-bold mb-4 md:mb-0' href="#">Mystery Message</a>
                 {session ?
                     <>
-                        <span>
-                            Welcome {user.username || user.email}
+                        <span className='mr-4'>
+                            Welcome {user?.username || user?.email}
                         </span>
-                        <Button onClick={() => signOut()}>Logout</Button>
+                        <Button className='w-full md:w-auto' onClick={() => signOut()}>Logout</Button>
                     </>
                     : <Link href='/signin'>
-                        <Button>
+                        <Button className='w-full md:w-auto'>
                             Login
                         </Button>
                     </Link>}
