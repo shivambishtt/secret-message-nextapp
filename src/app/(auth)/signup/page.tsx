@@ -9,7 +9,7 @@ import axios, { AxiosError } from "axios"
 import { useRouter } from 'next/navigation'
 import { signupSchemaValidation } from '@/schemas/signupSchema'
 import { ApiResponse } from '@/types/apiResponse'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Loader2 } from "lucide-react";
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -85,7 +85,7 @@ function Page() {
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel >
+                                    <FormLabel className='text-md' >
                                         Username
                                     </FormLabel>
                                     <FormControl>
@@ -96,9 +96,12 @@ function Page() {
                                             }}
                                         />
                                     </FormControl>
-                                    <p className={`text-sm ${usernameMessage === "Username is available" ? 'text-green-500' : 'text-red-500'}`}>
-                                        test{usernameMessage}
-                                    </p>
+                                    {
+                                        username.length !== 0 && <p className={`text-sm ${usernameMessage === "Username is available" ? 'text-green-500' : 'text-red-500'}`}>
+                                            {usernameMessage}
+                                        </p>
+                                    }
+
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -108,7 +111,7 @@ function Page() {
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel >
+                                    <FormLabel className='text-md' >
                                         Email
                                     </FormLabel>
                                     <FormControl>
@@ -123,7 +126,7 @@ function Page() {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel >
+                                    <FormLabel className='text-md' >
                                         Password
                                     </FormLabel>
                                     <FormControl>
@@ -133,13 +136,16 @@ function Page() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" disabled={formSubmitting}>
-                            {formSubmitting ? (
-                                <>
-                                    <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please Wait
-                                </>
-                            ) : "Signup"}
-                        </Button>
+                        <span className='flex items-center justify-between'>
+                            <Button className='' type="submit" disabled={formSubmitting}>
+                                {formSubmitting ? (
+                                    <>
+                                        <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please Wait
+                                    </>
+                                ) : "Signup"}
+                            </Button>
+                        </span>
+
                     </form>
                 </Form>
                 <div className='text-center mt-4'>

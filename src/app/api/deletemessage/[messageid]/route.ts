@@ -42,8 +42,7 @@ export async function DELETE(request: Request, { params }: { params: { messageid
                 status: 200
             }
         )
-        const messageId = await UserModel.findById(request)
-    } catch (error) {
+    } catch (error: unknown) {
         return Response.json(
             {
                 success: false,
