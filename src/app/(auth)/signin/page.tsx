@@ -26,19 +26,22 @@ function Page() {
   })
 
   const onsubmit = async (data: z.infer<typeof verifySignInSchema>) => {
+    setFormSubmitting(true)
     const result = await signIn("credentials", {
       redirect: false,
       identifier: data.identifier,
       password: data.password
     })
     if (result?.error) {
-      toast(result?.error)
+      toast(result.error)
       console.error("Error occured while logging in the user", result.error)
     }
     if (result?.url) {
       router.replace("/dashboard")
     }
   }
+  setFormSubmitting(false)
+
   return (
     <div className='flex justify-center items-center min-h-screen bg-gray-300'>
       <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
