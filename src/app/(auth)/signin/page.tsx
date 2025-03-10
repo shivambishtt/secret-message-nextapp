@@ -40,7 +40,6 @@ function Page() {
       router.replace("/dashboard")
     }
   }
-  setFormSubmitting(false)
 
   return (
     <div className='flex justify-center items-center min-h-screen bg-gray-300'>

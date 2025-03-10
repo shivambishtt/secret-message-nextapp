@@ -30,8 +30,6 @@ function VerifyAccount() {
             console.error("Error in verifying the code of user", error);
             const axiosError = error as AxiosError<ApiResponse>
             const errorMessage = axiosError.message
-            console.log(errorMessage);
-
             toast(errorMessage)
         }
     }
