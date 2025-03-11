@@ -30,7 +30,8 @@ function Page() {
     const result = await signIn("credentials", {
       redirect: false,
       identifier: data.identifier,
-      password: data.password
+      password: data.password,
+      callbackUrl: "/dashboard"
     })
     if (result?.error) {
       toast(result.error)

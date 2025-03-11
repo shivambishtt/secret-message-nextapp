@@ -49,26 +49,27 @@ function Page() {
     }
 
     useEffect(() => {
+        if (typeof window === "undefined") return; // Avoid fetching on the server
+    
         const checkUsernameUnique = async () => {
-            if (username) {
-                setIsCheckingUsername(true)
-                setUsernameMessage("")
-            }
+            if (!username) return;
+            setIsCheckingUsername(true);
+            setUsernameMessage("");
+    
             try {
-                const response = await axios.get(`/api/check-username-unique?username=${username}`)
-                const message = response.data?.message
-                setUsernameMessage(message)
+                const response = await axios.get(`/api/check-username-unique?username=${username}`);
+                setUsernameMessage(response.data?.message);
             } catch (error) {
-                const axiosError = error as AxiosError<ApiResponse>
-                setUsernameMessage(axiosError.response?.data.message || "Error checking username")
+                const axiosError = error as AxiosError<ApiResponse>;
+                setUsernameMessage(axiosError.response?.data.message || "Error checking username");
+            } finally {
+                setIsCheckingUsername(false);
             }
-            finally {
-                setIsCheckingUsername(false)
-            }
-        }
-        checkUsernameUnique()
-
-    }, [username])
+        };
+    
+        checkUsernameUnique();
+    }, [username]);
+    
     return (
         <div className='flex justify-center items-center min-h-screen bg-gray-300'>
             <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
