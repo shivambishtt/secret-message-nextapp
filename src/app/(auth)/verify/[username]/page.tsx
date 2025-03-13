@@ -1,6 +1,6 @@
 "use client"
 import { useParams, useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from "sonner"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
