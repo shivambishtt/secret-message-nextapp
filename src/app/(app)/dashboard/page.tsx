@@ -33,7 +33,7 @@ function Page() {
     setIsSwitchLoading(true)
     try {
       const response = await axios.get<ApiResponse>(`/api/acceptmessage`)
-      setValue("isAcceptingMessages", response.data.isAcceptingMessages)
+      setValue("isAcceptingMessages", response?.data?.isAcceptingMessages)
     } catch (error) {
       const axiosEror = error as AxiosError<ApiResponse>
       toast(axiosEror.message)
@@ -86,10 +86,13 @@ function Page() {
     toast("Copied to clipboard")
   }
   if (!session || !session.user) {
-    return <div>
-      Please Login
+    return <div className="flex justify-center items-center">
+      <h1 className='text-xl mt-16 font-semibold'>
+        Oops You are not logged in !😪
+      </h1>
     </div>
   }
+
   return (
     <div className='my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded  w-full max-w-6xl'>
       <h1 className='text-4xl font-bold mb-4'>User Dashboard</h1>

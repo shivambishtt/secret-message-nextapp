@@ -42,7 +42,7 @@ export async function POST(request: Request) {
         return Response.json(
             {
                 success: true,
-                message: "Message acceptance status updated successfully",
+                message: "Message status updated",
                 updatedUser
             },
             {
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
 
     }
 }
-export async function GET(request: Request) {
+export async function GET( ) {
     await connectDB()
     try {
         const session = await getServerSession(authOptions)
