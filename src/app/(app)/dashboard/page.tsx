@@ -17,6 +17,7 @@ import { toast } from 'sonner'
 function Page() {
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [acceptingMessages, setAcceptingMessages] = useState<boolean>(true)
   const [isSwitchLoading, setIsSwitchLoading] = useState<boolean>(false)
   const handleDeleteMessage = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId))
@@ -33,11 +34,15 @@ function Page() {
     setIsSwitchLoading(true)
     try {
       const response = await axios.get<ApiResponse>(`/api/acceptmessage`)
-      setValue("isAcceptingMessages", response?.data?.isAcceptingMessages)
+      const isAccepting = response?.data?.isAcceptingMessages ?? false
+
+      setValue("isAcceptingMessages", isAccepting)
+
     } catch (error) {
       const axiosEror = error as AxiosError<ApiResponse>
       toast(axiosEror.message)
     }
+    setIsSwitchLoading(false)
   }, [setValue])
 
   const fetchMessage = useCallback(async (refresh: boolean = false) => {
@@ -50,15 +55,16 @@ function Page() {
         toast("Refreshed messages")
       }
     } catch (error) {
-      const axiosEror = error as AxiosError<ApiResponse>
-      toast(axiosEror.message)
+      const axiosError = error as AxiosError<ApiResponse>
+      toast(axiosError.message)
     }
     finally {
       setIsSwitchLoading(false)
     }
   }, [setIsLoading, setMessages])
+
   useEffect(() => {
-    if (!session || session.user) {
+    if (!session || !session.user) {
       return
     }
     fetchMessage()
@@ -67,10 +73,11 @@ function Page() {
 
   const handleSwitchChange = async () => {
     try {
-      const response = await axios.post<ApiResponse>(`api/acceptmessage`, {
-        acceptMessage: !acceptMessage
+      const newStatus = !acceptMessage;
+      const response = await axios.post<ApiResponse>(`/api/acceptmessage`, {
+        acceptMessage: newStatus
       })
-      setValue("isAcceptingMessages", !acceptMessage)
+      setValue("isAcceptingMessages", newStatus)
       toast(response.data.message)
     } catch (error) {
       const axiosEror = error as AxiosError<ApiResponse>
