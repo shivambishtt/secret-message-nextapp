@@ -13,7 +13,6 @@ import Link from 'next/link'
 import { verifySignInSchema } from '@/schemas/signinSchema'
 import { signIn } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
-
 function Page() {
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false)
   const router = useRouter()

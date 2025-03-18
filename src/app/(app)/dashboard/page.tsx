@@ -30,11 +30,11 @@ function Page() {
   const acceptMessage = watch("isAcceptingMessages")
 
   const fetchAcceptMessage = useCallback(async () => {
+    setIsLoading(true)
     setIsSwitchLoading(true)
     try {
       const response = await axios.get<ApiResponse>(`/api/acceptmessage`)
       const isAccepting = response?.data?.isAcceptingMessages ?? false
-
       setValue("isAcceptingMessages", isAccepting)
 
     } catch (error) {
@@ -42,7 +42,8 @@ function Page() {
       toast(axiosEror.message)
     }
     setIsSwitchLoading(false)
-  }, [setValue])
+    setIsLoading(false)
+  }, [setValue, setIsLoading])
 
   const fetchMessage = useCallback(async (refresh: boolean = false) => {
     setIsLoading(true)
