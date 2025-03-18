@@ -7,7 +7,7 @@ import { Message } from "@/models/user.models";
 
 export async function POST(request: Request) {
     await connectDB()
-    const { username, content } = request.json()
+    const { username, content } = await request.json()
     try {
         const user = await UserModel.findOne({ username })
         if (!user) {

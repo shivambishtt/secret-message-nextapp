@@ -17,7 +17,6 @@ import { toast } from 'sonner'
 function Page() {
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [acceptingMessages, setAcceptingMessages] = useState<boolean>(true)
   const [isSwitchLoading, setIsSwitchLoading] = useState<boolean>(false)
   const handleDeleteMessage = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId))

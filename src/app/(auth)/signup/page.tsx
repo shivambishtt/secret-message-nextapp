@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 function Page() {
+    
     const router = useRouter();
     const [username, setUsername] = useState("")
     const [usernameMessage, setUsernameMessage] = useState<string>("")

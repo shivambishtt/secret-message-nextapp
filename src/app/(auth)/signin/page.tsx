@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { verifySignInSchema } from '@/schemas/signinSchema'
 import { signIn } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
 function Page() {
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false)
@@ -25,6 +26,10 @@ function Page() {
     }
   })
 
+  const session = useSession()
+  if (session.data) {
+    router.push("/dashboard")
+  }
   const onsubmit = async (data: z.infer<typeof verifySignInSchema>) => {
     setFormSubmitting(true)
     const result = await signIn("credentials", {
@@ -37,7 +42,7 @@ function Page() {
       toast(result.error)
       console.error("Error occured while logging in the user", result.error)
     }
-    if (result?.url) {
+    if (result?.ok) {
       router.replace("/dashboard")
     }
   }
