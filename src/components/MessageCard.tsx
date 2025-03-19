@@ -27,7 +27,7 @@ function MessageCard({ message, onMessageDelete }: MessageCardProps) {
         <div>
             <Card>
                 <CardHeader>
-                    <CardTitle>Card Title</CardTitle>
+                    <CardTitle>{message}</CardTitle>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
                             <Button>
