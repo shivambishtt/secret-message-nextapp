@@ -1,8 +1,5 @@
 import UserModel from "@/models/user.models";
 import connectDB from "@/lib/dbConnect";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
-import { User } from "next-auth";
 import { Message } from "@/models/user.models";
 
 export async function POST(request: Request) {
@@ -14,7 +11,7 @@ export async function POST(request: Request) {
             return Response.json(
                 {
                     succes: false,
-                    message: "User not found"
+                    message: "User does not exists"
                 },
                 {
                     status: 404
@@ -28,7 +25,7 @@ export async function POST(request: Request) {
                     message: "User is not accepting messages currently"
                 },
                 {
-                    status: 403
+                    status: 402
                 }
             )
         }
@@ -44,7 +41,7 @@ export async function POST(request: Request) {
                 message: "Message sent successfully"
             },
             {
-                status: 403
+                status: 200
             }
         )
 
@@ -55,7 +52,7 @@ export async function POST(request: Request) {
                 message: "Error while sending messages"
             },
             {
-                status: 404
+                status: 501
             }
         )
     }
