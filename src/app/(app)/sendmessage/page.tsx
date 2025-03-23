@@ -27,8 +27,18 @@ function Page() {
             const axiosError = error as AxiosError<ApiResponse>;
             console.log(axiosError);
         }
-
-
+    }
+    const deleteMessage = async (messageid: string) => {
+        try {
+            const response = await axios.delete(`/api/deletemessage/${messageid}`)
+            toast(response.data.message)
+            setMessages((prevMessages) => prevMessages.filter((message) => {
+                return message.id !== messageid
+            }))
+        } catch (error) {
+            const axiosError = error as AxiosError
+            console.log(axiosError);
+        }
     }
     return (
         <div>
@@ -66,8 +76,8 @@ function Page() {
                     />
                     <Button type="submit">Submit</Button>
                 </form>
-                {messages.map((message, index) => (
-                    <MessageCard key={message._id as string} message={message} />
+                {messages.map((message) => (
+                    <MessageCard key={message._id as string} message={message} onMessageDelete={deleteMessage} />
                 ))}
 
 
