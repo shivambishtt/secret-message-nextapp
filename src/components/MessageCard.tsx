@@ -13,10 +13,11 @@ import { ApiResponse } from '@/types/apiResponse'
 
 interface MessageCardProps {
     message: Message,
+    key?: string,
     onMessageDelete: (messageId: string) => void
 }
 
-function MessageCard({ message, onMessageDelete }: MessageCardProps) {
+function MessageCard({ message, onMessageDelete, key }: MessageCardProps) {
 
     const handleDeleteConfirm = async () => {
         const response = await axios.delete<ApiResponse>(`/api/deletemessage/${message._id}`)
@@ -38,8 +39,8 @@ function MessageCard({ message, onMessageDelete }: MessageCardProps) {
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete your account
-                                    and remove your data from our servers.
+                                    This action cannot be undone. This will permanently delete your message
+                                    from our servers.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
@@ -48,7 +49,6 @@ function MessageCard({ message, onMessageDelete }: MessageCardProps) {
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
-                    <CardDescription>Card Description</CardDescription>
                 </CardHeader>
                 <CardContent>
                 </CardContent>

@@ -67,7 +67,7 @@ function Page() {
                     <Button type="submit">Submit</Button>
                 </form>
                 {messages.map((message, index) => (
-                    <MessageCard key={message._id ?? index} message={message} />
+                    <MessageCard key={message._id as string} message={message} />
                 ))}
 
 
