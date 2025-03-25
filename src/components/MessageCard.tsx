@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import {
     AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
@@ -17,7 +17,7 @@ interface MessageCardProps {
     onMessageDelete: (messageId: string) => void
 }
 
-function MessageCard({ message, onMessageDelete, key }: MessageCardProps) {
+function MessageCard({ message }: MessageCardProps) {
 
     const handleDeleteConfirm = async () => {
         const response = await axios.delete<ApiResponse>(`/api/deletemessage/${message._id}`)
@@ -53,8 +53,6 @@ function MessageCard({ message, onMessageDelete, key }: MessageCardProps) {
                 <CardContent>
                 </CardContent>
             </Card>
-
-
         </div>
     )
 }
