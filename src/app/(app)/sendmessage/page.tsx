@@ -15,7 +15,8 @@ function Page() {
     const form = useForm({
         defaultValues: {
             username: "",
-            content: ""
+            content: "",
+            email: ""
         }
     })
     const addMessage = async (data: Message) => {
@@ -25,7 +26,7 @@ function Page() {
             setMessages((prevMessages) => [...prevMessages, data]);
         } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>;
-            console.log(axiosError);
+            toast(axiosError.response?.data.message);
         }
     }
     const deleteMessage = async (messageid: string) => {
@@ -52,6 +53,21 @@ function Page() {
                                 <FormLabel className='text-md'>Username</FormLabel>
                                 <FormControl>
                                     <Input placeholder="Enter username" {...field} onChange={(event) => {
+                                        field.onChange(event);
+                                    }} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className='text-md'>Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter email" {...field} onChange={(event) => {
                                         field.onChange(event);
                                     }} />
                                 </FormControl>
