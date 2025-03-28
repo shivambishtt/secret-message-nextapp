@@ -17,7 +17,7 @@ export async function DELETE(request: Request, { params }: { params: { messageid
                     message: "Not Authenticated"
                 },
                 {
-                    status: 401
+                    status: 402
                 }
             )
         }
