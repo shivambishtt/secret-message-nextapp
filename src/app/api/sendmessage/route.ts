@@ -47,14 +47,14 @@ export async function POST(request: Request) {
             }
         )
 
-    } catch (error) {
+    } catch (error: unknown) {
         return Response.json(
             {
                 succes: false,
-                message: "Error while sending messages"
+                message: "Error occured while sending messages"
             },
             {
-                status: 501
+                status: 500
             }
         )
     }

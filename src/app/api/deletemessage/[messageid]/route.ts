@@ -46,7 +46,7 @@ export async function DELETE(request: Request, { params }: { params: { messageid
         return Response.json(
             {
                 success: false,
-                message: "Error occured while deleting message"
+                message: "Error occured while deleting the message"
             },
             {
                 status: 500
