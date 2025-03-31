@@ -47,7 +47,7 @@ export async function POST(request: Request) {
             }
         )
 
-    } catch (error: unknown) {
+    } catch (error) {
         return Response.json(
             {
                 succes: false,
