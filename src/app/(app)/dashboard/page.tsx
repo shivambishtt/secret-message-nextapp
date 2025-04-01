@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import axios, { AxiosError } from 'axios'
 import { Loader2, RefreshCcw } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -63,13 +63,17 @@ function Page() {
     }
   }, [setIsLoading, setMessages])
 
+  const isFetch = useRef(false)
+
   useEffect(() => {
-    if (!session || !session.user) {
+    if (!session || !session.user || isFetch.current) {
       return
     }
-    fetchMessage()
     fetchAcceptMessage()
-  }, [session, setValue, fetchMessage, fetchAcceptMessage])
+    fetchMessage()
+    isFetch.current = true
+
+  }, [session])
 
   const handleSwitchChange = async () => {
     try {

@@ -4,10 +4,10 @@ import { Message } from "@/models/user.models";
 
 export async function POST(request: Request) {
     await connectDB()
-    const { username, content, email } = await request.json()
+    const { username, content, email } = await request.json() // frontend 
     try {
         const user = await UserModel.findOne({
-            $or: [{ username }, { email }]
+            $or: [{ username }, { email }] // backend looking in db
         })
         if (!user) {
             return Response.json(
@@ -17,6 +17,17 @@ export async function POST(request: Request) {
                 },
                 {
                     status: 404
+                }
+            )
+        }
+        if (user?.username === username) {
+            return Response.json(
+                {
+                    succes: false,
+                    message: "You cannot send message to yourself"
+                },
+                {
+                    status: 403
                 }
             )
         }
