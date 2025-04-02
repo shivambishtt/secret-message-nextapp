@@ -14,7 +14,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Loader2 } from "lucide-react";
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 
 function Page() {
     const router = useRouter();
@@ -26,7 +25,7 @@ function Page() {
     const debounce = useDebounceCallback(setUsername, 500);
 
     useEffect(() => {
-        setUsername(""); // ✅ Ensure SSR & Client are in sync
+        setUsername("");
     }, []);
 
     const form = useForm<z.infer<typeof signupSchemaValidation>>({
@@ -41,8 +40,10 @@ function Page() {
     const onsubmit = async (data: unknown) => {
         setFormSubmitting(true);
         try {
-            const response = await axios.post<ApiResponse>(`/api/signup`, data);
-            toast(response.data.message);
+            const response = await axios.post<ApiResponse>("/api/signup", data);
+            if (response?.data) {
+                toast(response.data.message);
+            }
             router.replace(`/verify/${username}`);
         } catch (error) {
             console.error("Error in signup of user", error);
@@ -54,7 +55,7 @@ function Page() {
     };
 
     useEffect(() => {
-        if (typeof window === "undefined") return; // ✅ Ensures it runs only on client
+        if (typeof window === "undefined") return;
 
         const checkUsernameUnique = async () => {
             if (!username) return;
