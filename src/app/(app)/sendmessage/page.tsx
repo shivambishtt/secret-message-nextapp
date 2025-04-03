@@ -9,11 +9,9 @@ import { useForm } from 'react-hook-form'
 import { Message } from '@/models/user.models'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { useSession } from 'next-auth/react'
 
 function Page() {
     const [messages, setMessages] = useState<Message[]>([])
-    const session = useSession()
     const form = useForm({
         defaultValues: {
             username: "",
@@ -22,8 +20,6 @@ function Page() {
         }
     })
     const addMessage = async (data: Message) => {
-        console.log(session.data);
-
         try {
             const response = await axios.post("/api/sendmessage", data)
             toast(response.data?.message)
