@@ -40,11 +40,12 @@ function Page() {
     const onsubmit = async (data: unknown) => {
         setFormSubmitting(true);
         try {
-            const response = await axios.post<ApiResponse>("/api/signup", data);
+            const response = await axios.post<ApiResponse>(`/api/signup`, data);
             if (response?.data) {
                 toast(response.data.message);
             }
             router.replace(`/verify/${username}`);
+            setFormSubmitting(false)
         } catch (error) {
             console.error("Error in signup of user", error);
             const axiosError = error as AxiosError<ApiResponse>;

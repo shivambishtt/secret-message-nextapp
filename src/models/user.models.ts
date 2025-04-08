@@ -22,7 +22,7 @@ const MessageSchema: Schema<Message> = new Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true
+        // unique: true
     },
     createdAt: {
         type: Date,
