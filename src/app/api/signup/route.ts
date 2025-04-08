@@ -15,7 +15,7 @@ export async function POST(request: Request) {
                 {
                     status: 400
                 })
-        }        
+        }
         const existingUserByEmail = await UserModel.findOne({ email })
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
         if (existingUserByEmail) {
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
             const expiryTime = new Date()
             expiryTime.setHours(expiryTime.getHours() + 1)
 
-            const user = await new UserModel({
+            const user = new UserModel({
                 username,
                 email,
                 password: hashPassword,

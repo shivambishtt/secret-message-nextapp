@@ -26,9 +26,9 @@ function Page() {
   })
 
   const session = useSession()
-  // if (session.data) {
-  //   router.push("/dashboard")
-  // }
+  if (session.data) {
+    router.push("/dashboard")
+  }
   const onsubmit = async (data: z.infer<typeof verifySignInSchema>) => {
     setFormSubmitting(true)
     const result = await signIn("credentials", {
