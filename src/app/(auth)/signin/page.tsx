@@ -29,6 +29,13 @@ function Page() {
   if (session.data) {
     router.push("/dashboard")
   }
+  const isUserVerified = session.data?.user.isVerified
+  if (!isUserVerified) {
+    if (session.data?.user) {
+      router.replace(`/verify/${session?.data?.user?.username}`)
+
+    }
+  }
   const onsubmit = async (data: z.infer<typeof verifySignInSchema>) => {
     setFormSubmitting(true)
     const result = await signIn("credentials", {
