@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { verifySignInSchema } from '@/schemas/signinSchema'
 import { signIn } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
+
 function Page() {
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false)
   const router = useRouter()
@@ -24,18 +25,11 @@ function Page() {
       password: "",
     }
   })
-
   const session = useSession()
   if (session.data) {
     router.push("/dashboard")
   }
-  const isUserVerified = session.data?.user.isVerified
-  if (!isUserVerified) {
-    if (session.data?.user) {
-      router.replace(`/verify/${session?.data?.user?.username}`)
 
-    }
-  }
   const onsubmit = async (data: z.infer<typeof verifySignInSchema>) => {
     setFormSubmitting(true)
     const result = await signIn("credentials", {
@@ -52,7 +46,6 @@ function Page() {
       router.replace("/dashboard")
     }
   }
-
   return (
     <div className='flex justify-center items-center min-h-screen bg-gray-300'>
       <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
@@ -116,5 +109,7 @@ function Page() {
     </div>
   )
 }
+
+
 
 export default Page
