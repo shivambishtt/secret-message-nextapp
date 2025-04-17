@@ -52,7 +52,7 @@ function Page() {
       const response = await axios.get<ApiResponse>(`/api/getmessage`)
       setMessages(response.data.messages || [])
       if (refresh) {
-        toast("Refreshed messages")
+        toast("Refreshed messages succesfully")
       }
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>
@@ -73,7 +73,7 @@ function Page() {
     fetchMessage()
     isFetch.current = true
 
-  }, [session])
+  }, [session, fetchAcceptMessage, fetchMessage])
 
   const handleSwitchChange = async () => {
     try {
